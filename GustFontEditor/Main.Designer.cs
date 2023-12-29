@@ -30,6 +30,9 @@ namespace GustFontEditor
         private void InitializeComponent()
         {
             this.gbGameInfo = new System.Windows.Forms.GroupBox();
+            this.nudTextureWidth = new System.Windows.Forms.NumericUpDown();
+            this.nudTextureHeight = new System.Windows.Forms.NumericUpDown();
+            this.btnDefrag = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnRetryOffsetFind = new System.Windows.Forms.Button();
             this.btnReload = new System.Windows.Forms.Button();
@@ -48,10 +51,10 @@ namespace GustFontEditor
             this.pgRedraw = new System.Windows.Forms.TabControl();
             this.pgGlyphs = new System.Windows.Forms.TabPage();
             this.nudBottom = new System.Windows.Forms.NumericUpDown();
-            this.nudRigth = new System.Windows.Forms.NumericUpDown();
+            this.nudRight = new System.Windows.Forms.NumericUpDown();
             this.nudLeft = new System.Windows.Forms.NumericUpDown();
             this.nudTop = new System.Windows.Forms.NumericUpDown();
-            this.lblPaddingRigth = new System.Windows.Forms.Label();
+            this.lblPaddingRight = new System.Windows.Forms.Label();
             this.lblPaddingLeft = new System.Windows.Forms.Label();
             this.lblPaddingBottom = new System.Windows.Forms.Label();
             this.lblPaddingTop = new System.Windows.Forms.Label();
@@ -70,8 +73,9 @@ namespace GustFontEditor
             this.lblY = new System.Windows.Forms.Label();
             this.lblX = new System.Windows.Forms.Label();
             this.lblID = new System.Windows.Forms.Label();
-            this.pbCharVeiwer = new System.Windows.Forms.PictureBox();
+            this.pbCharViewer = new System.Windows.Forms.PictureBox();
             this.tabRedraw = new System.Windows.Forms.TabPage();
+            this.btnLoadLST = new System.Windows.Forms.Button();
             this.cbTrimming = new System.Windows.Forms.CheckBox();
             this.cbRemapEnabled = new System.Windows.Forms.CheckBox();
             this.btnPreview = new System.Windows.Forms.Button();
@@ -96,12 +100,17 @@ namespace GustFontEditor
             this.wbEgg = new System.Windows.Forms.WebBrowser();
             this.fdOpenTexture = new System.Windows.Forms.OpenFileDialog();
             this.fdExecutable = new System.Windows.Forms.OpenFileDialog();
-            this.btnLoadLST = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tslStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tspStatus = new System.Windows.Forms.ToolStripProgressBar();
+            this.tslState = new System.Windows.Forms.ToolStripStatusLabel();
             this.gbGameInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTextureWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTextureHeight)).BeginInit();
             this.pgRedraw.SuspendLayout();
             this.pgGlyphs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudBottom)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRigth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTop)).BeginInit();
             this.pnFont.SuspendLayout();
@@ -110,16 +119,20 @@ namespace GustFontEditor
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbCharVeiwer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCharViewer)).BeginInit();
             this.tabRedraw.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.tabAbout.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbGameInfo
             // 
             this.gbGameInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbGameInfo.Controls.Add(this.nudTextureWidth);
+            this.gbGameInfo.Controls.Add(this.nudTextureHeight);
+            this.gbGameInfo.Controls.Add(this.btnDefrag);
             this.gbGameInfo.Controls.Add(this.btnExport);
             this.gbGameInfo.Controls.Add(this.btnRetryOffsetFind);
             this.gbGameInfo.Controls.Add(this.btnReload);
@@ -135,19 +148,82 @@ namespace GustFontEditor
             this.gbGameInfo.Controls.Add(this.btnSelectExe);
             this.gbGameInfo.Controls.Add(this.tbExePath);
             this.gbGameInfo.Controls.Add(this.lblExecutable);
-            this.gbGameInfo.Location = new System.Drawing.Point(12, 339);
+            this.gbGameInfo.Location = new System.Drawing.Point(14, 311);
+            this.gbGameInfo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gbGameInfo.Name = "gbGameInfo";
-            this.gbGameInfo.Size = new System.Drawing.Size(820, 130);
+            this.gbGameInfo.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gbGameInfo.Size = new System.Drawing.Size(957, 120);
             this.gbGameInfo.TabIndex = 0;
             this.gbGameInfo.TabStop = false;
             this.gbGameInfo.Text = "Game Info:";
             // 
+            // nudTextureWidth
+            // 
+            this.nudTextureWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.nudTextureWidth.Increment = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            this.nudTextureWidth.Location = new System.Drawing.Point(747, 66);
+            this.nudTextureWidth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.nudTextureWidth.Maximum = new decimal(new int[] {
+            4096,
+            0,
+            0,
+            0});
+            this.nudTextureWidth.Name = "nudTextureWidth";
+            this.nudTextureWidth.Size = new System.Drawing.Size(48, 21);
+            this.nudTextureWidth.TabIndex = 32;
+            this.nudTextureWidth.Value = new decimal(new int[] {
+            4096,
+            0,
+            0,
+            0});
+            // 
+            // nudTextureHeight
+            // 
+            this.nudTextureHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.nudTextureHeight.Increment = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            this.nudTextureHeight.Location = new System.Drawing.Point(797, 66);
+            this.nudTextureHeight.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.nudTextureHeight.Maximum = new decimal(new int[] {
+            4096,
+            0,
+            0,
+            0});
+            this.nudTextureHeight.Name = "nudTextureHeight";
+            this.nudTextureHeight.Size = new System.Drawing.Size(48, 21);
+            this.nudTextureHeight.TabIndex = 31;
+            this.nudTextureHeight.Value = new decimal(new int[] {
+            2048,
+            0,
+            0,
+            0});
+            // 
+            // btnDefrag
+            // 
+            this.btnDefrag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDefrag.Location = new System.Drawing.Point(852, 66);
+            this.btnDefrag.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnDefrag.Name = "btnDefrag";
+            this.btnDefrag.Size = new System.Drawing.Size(98, 21);
+            this.btnDefrag.TabIndex = 15;
+            this.btnDefrag.Text = "Defrag Font";
+            this.btnDefrag.UseVisualStyleBackColor = true;
+            this.btnDefrag.Click += new System.EventHandler(this.btnDefrag_Click);
+            // 
             // btnExport
             // 
             this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExport.Location = new System.Drawing.Point(640, 97);
+            this.btnExport.Location = new System.Drawing.Point(747, 90);
+            this.btnExport.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(84, 23);
+            this.btnExport.Size = new System.Drawing.Size(98, 21);
             this.btnExport.TabIndex = 14;
             this.btnExport.Text = "Save Font";
             this.btnExport.UseVisualStyleBackColor = true;
@@ -156,9 +232,10 @@ namespace GustFontEditor
             // btnRetryOffsetFind
             // 
             this.btnRetryOffsetFind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRetryOffsetFind.Location = new System.Drawing.Point(326, 97);
+            this.btnRetryOffsetFind.Location = new System.Drawing.Point(380, 90);
+            this.btnRetryOffsetFind.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnRetryOffsetFind.Name = "btnRetryOffsetFind";
-            this.btnRetryOffsetFind.Size = new System.Drawing.Size(56, 23);
+            this.btnRetryOffsetFind.Size = new System.Drawing.Size(65, 21);
             this.btnRetryOffsetFind.TabIndex = 13;
             this.btnRetryOffsetFind.Text = "Retry";
             this.btnRetryOffsetFind.UseVisualStyleBackColor = true;
@@ -167,9 +244,10 @@ namespace GustFontEditor
             // btnReload
             // 
             this.btnReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReload.Location = new System.Drawing.Point(730, 97);
+            this.btnReload.Location = new System.Drawing.Point(852, 90);
+            this.btnReload.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(84, 23);
+            this.btnReload.Size = new System.Drawing.Size(98, 21);
             this.btnReload.TabIndex = 12;
             this.btnReload.Text = "Load Font";
             this.btnReload.UseVisualStyleBackColor = true;
@@ -178,18 +256,20 @@ namespace GustFontEditor
             // tbGlyphCount
             // 
             this.tbGlyphCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbGlyphCount.Location = new System.Drawing.Point(462, 99);
+            this.tbGlyphCount.Location = new System.Drawing.Point(539, 91);
+            this.tbGlyphCount.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbGlyphCount.Name = "tbGlyphCount";
-            this.tbGlyphCount.Size = new System.Drawing.Size(172, 20);
+            this.tbGlyphCount.Size = new System.Drawing.Size(200, 21);
             this.tbGlyphCount.TabIndex = 11;
             // 
             // lblGlyphCount
             // 
             this.lblGlyphCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblGlyphCount.AutoSize = true;
-            this.lblGlyphCount.Location = new System.Drawing.Point(388, 102);
+            this.lblGlyphCount.Location = new System.Drawing.Point(453, 94);
+            this.lblGlyphCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGlyphCount.Name = "lblGlyphCount";
-            this.lblGlyphCount.Size = new System.Drawing.Size(68, 13);
+            this.lblGlyphCount.Size = new System.Drawing.Size(79, 12);
             this.lblGlyphCount.TabIndex = 10;
             this.lblGlyphCount.Text = "Glyph Count:";
             // 
@@ -197,17 +277,19 @@ namespace GustFontEditor
             // 
             this.tbTableOffset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbTableOffset.Location = new System.Drawing.Point(83, 99);
+            this.tbTableOffset.Location = new System.Drawing.Point(97, 91);
+            this.tbTableOffset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbTableOffset.Name = "tbTableOffset";
-            this.tbTableOffset.Size = new System.Drawing.Size(237, 20);
+            this.tbTableOffset.Size = new System.Drawing.Size(276, 21);
             this.tbTableOffset.TabIndex = 9;
             // 
             // lblTableOffset
             // 
             this.lblTableOffset.AutoSize = true;
-            this.lblTableOffset.Location = new System.Drawing.Point(9, 102);
+            this.lblTableOffset.Location = new System.Drawing.Point(10, 94);
+            this.lblTableOffset.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTableOffset.Name = "lblTableOffset";
-            this.lblTableOffset.Size = new System.Drawing.Size(68, 13);
+            this.lblTableOffset.Size = new System.Drawing.Size(77, 12);
             this.lblTableOffset.TabIndex = 8;
             this.lblTableOffset.Text = "Table Offset:";
             // 
@@ -215,27 +297,30 @@ namespace GustFontEditor
             // 
             this.tbGame.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbGame.Location = new System.Drawing.Point(83, 71);
+            this.tbGame.Location = new System.Drawing.Point(97, 66);
+            this.tbGame.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbGame.Name = "tbGame";
             this.tbGame.ReadOnly = true;
-            this.tbGame.Size = new System.Drawing.Size(731, 20);
+            this.tbGame.Size = new System.Drawing.Size(642, 21);
             this.tbGame.TabIndex = 7;
             // 
             // lblGame
             // 
             this.lblGame.AutoSize = true;
-            this.lblGame.Location = new System.Drawing.Point(31, 74);
+            this.lblGame.Location = new System.Drawing.Point(36, 68);
+            this.lblGame.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGame.Name = "lblGame";
-            this.lblGame.Size = new System.Drawing.Size(38, 13);
+            this.lblGame.Size = new System.Drawing.Size(43, 12);
             this.lblGame.TabIndex = 6;
             this.lblGame.Text = "Game:";
             // 
             // btnSelectTex
             // 
             this.btnSelectTex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelectTex.Location = new System.Drawing.Point(782, 43);
+            this.btnSelectTex.Location = new System.Drawing.Point(912, 40);
+            this.btnSelectTex.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSelectTex.Name = "btnSelectTex";
-            this.btnSelectTex.Size = new System.Drawing.Size(32, 23);
+            this.btnSelectTex.Size = new System.Drawing.Size(37, 21);
             this.btnSelectTex.TabIndex = 5;
             this.btnSelectTex.Text = "...";
             this.btnSelectTex.UseVisualStyleBackColor = true;
@@ -245,27 +330,30 @@ namespace GustFontEditor
             // 
             this.tbTexturePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbTexturePath.Location = new System.Drawing.Point(83, 45);
+            this.tbTexturePath.Location = new System.Drawing.Point(97, 42);
+            this.tbTexturePath.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbTexturePath.Name = "tbTexturePath";
             this.tbTexturePath.ReadOnly = true;
-            this.tbTexturePath.Size = new System.Drawing.Size(693, 20);
+            this.tbTexturePath.Size = new System.Drawing.Size(808, 21);
             this.tbTexturePath.TabIndex = 4;
             // 
             // lblTexture
             // 
             this.lblTexture.AutoSize = true;
-            this.lblTexture.Location = new System.Drawing.Point(31, 48);
+            this.lblTexture.Location = new System.Drawing.Point(36, 44);
+            this.lblTexture.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTexture.Name = "lblTexture";
-            this.lblTexture.Size = new System.Drawing.Size(46, 13);
+            this.lblTexture.Size = new System.Drawing.Size(52, 12);
             this.lblTexture.TabIndex = 3;
             this.lblTexture.Text = "Texture:";
             // 
             // btnSelectExe
             // 
             this.btnSelectExe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelectExe.Location = new System.Drawing.Point(782, 17);
+            this.btnSelectExe.Location = new System.Drawing.Point(912, 16);
+            this.btnSelectExe.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSelectExe.Name = "btnSelectExe";
-            this.btnSelectExe.Size = new System.Drawing.Size(32, 23);
+            this.btnSelectExe.Size = new System.Drawing.Size(37, 21);
             this.btnSelectExe.TabIndex = 2;
             this.btnSelectExe.Text = "...";
             this.btnSelectExe.UseVisualStyleBackColor = true;
@@ -275,18 +363,20 @@ namespace GustFontEditor
             // 
             this.tbExePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbExePath.Location = new System.Drawing.Point(83, 19);
+            this.tbExePath.Location = new System.Drawing.Point(97, 18);
+            this.tbExePath.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbExePath.Name = "tbExePath";
             this.tbExePath.ReadOnly = true;
-            this.tbExePath.Size = new System.Drawing.Size(693, 20);
+            this.tbExePath.Size = new System.Drawing.Size(808, 21);
             this.tbExePath.TabIndex = 1;
             // 
             // lblExecutable
             // 
             this.lblExecutable.AutoSize = true;
-            this.lblExecutable.Location = new System.Drawing.Point(14, 22);
+            this.lblExecutable.Location = new System.Drawing.Point(16, 20);
+            this.lblExecutable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblExecutable.Name = "lblExecutable";
-            this.lblExecutable.Size = new System.Drawing.Size(63, 13);
+            this.lblExecutable.Size = new System.Drawing.Size(72, 12);
             this.lblExecutable.TabIndex = 0;
             this.lblExecutable.Text = "Executable:";
             // 
@@ -299,18 +389,19 @@ namespace GustFontEditor
             this.pgRedraw.Controls.Add(this.tabRedraw);
             this.pgRedraw.Controls.Add(this.tabAbout);
             this.pgRedraw.Location = new System.Drawing.Point(2, 2);
+            this.pgRedraw.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pgRedraw.Name = "pgRedraw";
             this.pgRedraw.SelectedIndex = 0;
-            this.pgRedraw.Size = new System.Drawing.Size(842, 331);
+            this.pgRedraw.Size = new System.Drawing.Size(982, 304);
             this.pgRedraw.TabIndex = 1;
             // 
             // pgGlyphs
             // 
             this.pgGlyphs.Controls.Add(this.nudBottom);
-            this.pgGlyphs.Controls.Add(this.nudRigth);
+            this.pgGlyphs.Controls.Add(this.nudRight);
             this.pgGlyphs.Controls.Add(this.nudLeft);
             this.pgGlyphs.Controls.Add(this.nudTop);
-            this.pgGlyphs.Controls.Add(this.lblPaddingRigth);
+            this.pgGlyphs.Controls.Add(this.lblPaddingRight);
             this.pgGlyphs.Controls.Add(this.lblPaddingLeft);
             this.pgGlyphs.Controls.Add(this.lblPaddingBottom);
             this.pgGlyphs.Controls.Add(this.lblPaddingTop);
@@ -328,11 +419,12 @@ namespace GustFontEditor
             this.pgGlyphs.Controls.Add(this.lblY);
             this.pgGlyphs.Controls.Add(this.lblX);
             this.pgGlyphs.Controls.Add(this.lblID);
-            this.pgGlyphs.Controls.Add(this.pbCharVeiwer);
+            this.pgGlyphs.Controls.Add(this.pbCharViewer);
             this.pgGlyphs.Location = new System.Drawing.Point(4, 22);
+            this.pgGlyphs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pgGlyphs.Name = "pgGlyphs";
-            this.pgGlyphs.Padding = new System.Windows.Forms.Padding(3);
-            this.pgGlyphs.Size = new System.Drawing.Size(834, 305);
+            this.pgGlyphs.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.pgGlyphs.Size = new System.Drawing.Size(974, 278);
             this.pgGlyphs.TabIndex = 0;
             this.pgGlyphs.Text = "Glyphs";
             this.pgGlyphs.UseVisualStyleBackColor = true;
@@ -340,7 +432,8 @@ namespace GustFontEditor
             // nudBottom
             // 
             this.nudBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudBottom.Location = new System.Drawing.Point(751, 226);
+            this.nudBottom.Location = new System.Drawing.Point(876, 207);
+            this.nudBottom.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.nudBottom.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -352,7 +445,7 @@ namespace GustFontEditor
             0,
             -2147483648});
             this.nudBottom.Name = "nudBottom";
-            this.nudBottom.Size = new System.Drawing.Size(69, 20);
+            this.nudBottom.Size = new System.Drawing.Size(80, 21);
             this.nudBottom.TabIndex = 30;
             this.nudBottom.Value = new decimal(new int[] {
             100000,
@@ -361,34 +454,36 @@ namespace GustFontEditor
             0});
             this.nudBottom.ValueChanged += new System.EventHandler(this.nudBottom_ValueChanged);
             // 
-            // nudRigth
+            // nudRight
             // 
-            this.nudRigth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudRigth.Location = new System.Drawing.Point(751, 253);
-            this.nudRigth.Maximum = new decimal(new int[] {
+            this.nudRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.nudRight.Location = new System.Drawing.Point(876, 232);
+            this.nudRight.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.nudRight.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
-            this.nudRigth.Minimum = new decimal(new int[] {
+            this.nudRight.Minimum = new decimal(new int[] {
             100000,
             0,
             0,
             -2147483648});
-            this.nudRigth.Name = "nudRigth";
-            this.nudRigth.Size = new System.Drawing.Size(69, 20);
-            this.nudRigth.TabIndex = 29;
-            this.nudRigth.Value = new decimal(new int[] {
+            this.nudRight.Name = "nudRight";
+            this.nudRight.Size = new System.Drawing.Size(80, 21);
+            this.nudRight.TabIndex = 29;
+            this.nudRight.Value = new decimal(new int[] {
             100000,
             0,
             0,
             0});
-            this.nudRigth.ValueChanged += new System.EventHandler(this.nudRigth_ValueChanged);
+            this.nudRight.ValueChanged += new System.EventHandler(this.nudRight_ValueChanged);
             // 
             // nudLeft
             // 
             this.nudLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudLeft.Location = new System.Drawing.Point(634, 253);
+            this.nudLeft.Location = new System.Drawing.Point(740, 232);
+            this.nudLeft.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.nudLeft.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -400,7 +495,7 @@ namespace GustFontEditor
             0,
             -2147483648});
             this.nudLeft.Name = "nudLeft";
-            this.nudLeft.Size = new System.Drawing.Size(67, 20);
+            this.nudLeft.Size = new System.Drawing.Size(78, 21);
             this.nudLeft.TabIndex = 28;
             this.nudLeft.Value = new decimal(new int[] {
             100000,
@@ -412,7 +507,8 @@ namespace GustFontEditor
             // nudTop
             // 
             this.nudTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudTop.Location = new System.Drawing.Point(635, 226);
+            this.nudTop.Location = new System.Drawing.Point(741, 207);
+            this.nudTop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.nudTop.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -424,7 +520,7 @@ namespace GustFontEditor
             0,
             -2147483648});
             this.nudTop.Name = "nudTop";
-            this.nudTop.Size = new System.Drawing.Size(66, 20);
+            this.nudTop.Size = new System.Drawing.Size(77, 21);
             this.nudTop.TabIndex = 27;
             this.nudTop.Value = new decimal(new int[] {
             100000,
@@ -433,23 +529,25 @@ namespace GustFontEditor
             0});
             this.nudTop.ValueChanged += new System.EventHandler(this.nudTop_ValueChanged);
             // 
-            // lblPaddingRigth
+            // lblPaddingRight
             // 
-            this.lblPaddingRigth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblPaddingRigth.AutoSize = true;
-            this.lblPaddingRigth.Location = new System.Drawing.Point(710, 255);
-            this.lblPaddingRigth.Name = "lblPaddingRigth";
-            this.lblPaddingRigth.Size = new System.Drawing.Size(35, 13);
-            this.lblPaddingRigth.TabIndex = 26;
-            this.lblPaddingRigth.Text = "Rigth:";
+            this.lblPaddingRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPaddingRight.AutoSize = true;
+            this.lblPaddingRight.Location = new System.Drawing.Point(828, 233);
+            this.lblPaddingRight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPaddingRight.Name = "lblPaddingRight";
+            this.lblPaddingRight.Size = new System.Drawing.Size(37, 12);
+            this.lblPaddingRight.TabIndex = 26;
+            this.lblPaddingRight.Text = "Right:";
             // 
             // lblPaddingLeft
             // 
             this.lblPaddingLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPaddingLeft.AutoSize = true;
-            this.lblPaddingLeft.Location = new System.Drawing.Point(600, 255);
+            this.lblPaddingLeft.Location = new System.Drawing.Point(700, 233);
+            this.lblPaddingLeft.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPaddingLeft.Name = "lblPaddingLeft";
-            this.lblPaddingLeft.Size = new System.Drawing.Size(28, 13);
+            this.lblPaddingLeft.Size = new System.Drawing.Size(29, 12);
             this.lblPaddingLeft.TabIndex = 25;
             this.lblPaddingLeft.Text = "Left:";
             // 
@@ -457,9 +555,10 @@ namespace GustFontEditor
             // 
             this.lblPaddingBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPaddingBottom.AutoSize = true;
-            this.lblPaddingBottom.Location = new System.Drawing.Point(704, 228);
+            this.lblPaddingBottom.Location = new System.Drawing.Point(821, 208);
+            this.lblPaddingBottom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPaddingBottom.Name = "lblPaddingBottom";
-            this.lblPaddingBottom.Size = new System.Drawing.Size(43, 13);
+            this.lblPaddingBottom.Size = new System.Drawing.Size(48, 12);
             this.lblPaddingBottom.TabIndex = 24;
             this.lblPaddingBottom.Text = "Bottom:";
             // 
@@ -467,9 +566,10 @@ namespace GustFontEditor
             // 
             this.lblPaddingTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPaddingTop.AutoSize = true;
-            this.lblPaddingTop.Location = new System.Drawing.Point(600, 228);
+            this.lblPaddingTop.Location = new System.Drawing.Point(700, 208);
+            this.lblPaddingTop.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPaddingTop.Name = "lblPaddingTop";
-            this.lblPaddingTop.Size = new System.Drawing.Size(29, 13);
+            this.lblPaddingTop.Size = new System.Drawing.Size(31, 12);
             this.lblPaddingTop.TabIndex = 23;
             this.lblPaddingTop.Text = "Top:";
             // 
@@ -482,14 +582,16 @@ namespace GustFontEditor
             this.pnFont.BackColor = System.Drawing.Color.DarkSlateGray;
             this.pnFont.Controls.Add(this.pbMainTexture);
             this.pnFont.Location = new System.Drawing.Point(0, 0);
+            this.pnFont.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pnFont.Name = "pnFont";
-            this.pnFont.Size = new System.Drawing.Size(594, 305);
+            this.pnFont.Size = new System.Drawing.Size(693, 280);
             this.pnFont.TabIndex = 0;
             // 
             // pbMainTexture
             // 
             this.pbMainTexture.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pbMainTexture.Location = new System.Drawing.Point(0, 0);
+            this.pbMainTexture.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbMainTexture.Name = "pbMainTexture";
             this.pbMainTexture.Size = new System.Drawing.Size(1, 1);
             this.pbMainTexture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -500,24 +602,26 @@ namespace GustFontEditor
             // tbChar
             // 
             this.tbChar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbChar.Location = new System.Drawing.Point(707, 147);
+            this.tbChar.Location = new System.Drawing.Point(825, 134);
+            this.tbChar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbChar.MaxLength = 1;
             this.tbChar.Name = "tbChar";
-            this.tbChar.Size = new System.Drawing.Size(113, 20);
+            this.tbChar.Size = new System.Drawing.Size(131, 21);
             this.tbChar.TabIndex = 14;
             this.tbChar.TextChanged += new System.EventHandler(this.tbChar_TextChanged);
             // 
             // nudY
             // 
             this.nudY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudY.Location = new System.Drawing.Point(721, 173);
+            this.nudY.Location = new System.Drawing.Point(841, 158);
+            this.nudY.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.nudY.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.nudY.Name = "nudY";
-            this.nudY.Size = new System.Drawing.Size(99, 20);
+            this.nudY.Size = new System.Drawing.Size(115, 21);
             this.nudY.TabIndex = 13;
             this.nudY.Value = new decimal(new int[] {
             1000,
@@ -529,14 +633,15 @@ namespace GustFontEditor
             // nudHeight
             // 
             this.nudHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudHeight.Location = new System.Drawing.Point(745, 200);
+            this.nudHeight.Location = new System.Drawing.Point(869, 183);
+            this.nudHeight.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.nudHeight.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.nudHeight.Name = "nudHeight";
-            this.nudHeight.Size = new System.Drawing.Size(75, 20);
+            this.nudHeight.Size = new System.Drawing.Size(88, 21);
             this.nudHeight.TabIndex = 12;
             this.nudHeight.Value = new decimal(new int[] {
             1000,
@@ -548,14 +653,15 @@ namespace GustFontEditor
             // nudWidth
             // 
             this.nudWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudWidth.Location = new System.Drawing.Point(637, 200);
+            this.nudWidth.Location = new System.Drawing.Point(743, 183);
+            this.nudWidth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.nudWidth.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.nudWidth.Name = "nudWidth";
-            this.nudWidth.Size = new System.Drawing.Size(55, 20);
+            this.nudWidth.Size = new System.Drawing.Size(64, 21);
             this.nudWidth.TabIndex = 11;
             this.nudWidth.Value = new decimal(new int[] {
             1000,
@@ -567,14 +673,15 @@ namespace GustFontEditor
             // nudX
             // 
             this.nudX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudX.Location = new System.Drawing.Point(623, 173);
+            this.nudX.Location = new System.Drawing.Point(727, 158);
+            this.nudX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.nudX.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.nudX.Name = "nudX";
-            this.nudX.Size = new System.Drawing.Size(69, 20);
+            this.nudX.Size = new System.Drawing.Size(80, 21);
             this.nudX.TabIndex = 10;
             this.nudX.Value = new decimal(new int[] {
             1000,
@@ -586,9 +693,10 @@ namespace GustFontEditor
             // btnSearchChar
             // 
             this.btnSearchChar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchChar.Location = new System.Drawing.Point(751, 277);
+            this.btnSearchChar.Location = new System.Drawing.Point(876, 254);
+            this.btnSearchChar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSearchChar.Name = "btnSearchChar";
-            this.btnSearchChar.Size = new System.Drawing.Size(75, 23);
+            this.btnSearchChar.Size = new System.Drawing.Size(88, 21);
             this.btnSearchChar.TabIndex = 9;
             this.btnSearchChar.Text = "Search Char";
             this.btnSearchChar.UseVisualStyleBackColor = true;
@@ -597,10 +705,11 @@ namespace GustFontEditor
             // tbSearchChar
             // 
             this.tbSearchChar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSearchChar.Location = new System.Drawing.Point(603, 279);
+            this.tbSearchChar.Location = new System.Drawing.Point(704, 256);
+            this.tbSearchChar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbSearchChar.MaxLength = 5;
             this.tbSearchChar.Name = "tbSearchChar";
-            this.tbSearchChar.Size = new System.Drawing.Size(142, 20);
+            this.tbSearchChar.Size = new System.Drawing.Size(165, 21);
             this.tbSearchChar.TabIndex = 8;
             this.tbSearchChar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearchChar_KeyDown);
             // 
@@ -608,9 +717,10 @@ namespace GustFontEditor
             // 
             this.lblHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblHeight.AutoSize = true;
-            this.lblHeight.Location = new System.Drawing.Point(698, 202);
+            this.lblHeight.Location = new System.Drawing.Point(814, 184);
+            this.lblHeight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHeight.Name = "lblHeight";
-            this.lblHeight.Size = new System.Drawing.Size(41, 13);
+            this.lblHeight.Size = new System.Drawing.Size(44, 12);
             this.lblHeight.TabIndex = 7;
             this.lblHeight.Text = "Height:";
             // 
@@ -618,9 +728,10 @@ namespace GustFontEditor
             // 
             this.lblWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWidth.AutoSize = true;
-            this.lblWidth.Location = new System.Drawing.Point(600, 202);
+            this.lblWidth.Location = new System.Drawing.Point(700, 184);
+            this.lblWidth.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblWidth.Name = "lblWidth";
-            this.lblWidth.Size = new System.Drawing.Size(38, 13);
+            this.lblWidth.Size = new System.Drawing.Size(39, 12);
             this.lblWidth.TabIndex = 6;
             this.lblWidth.Text = "Width:";
             // 
@@ -628,9 +739,10 @@ namespace GustFontEditor
             // 
             this.lblChar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblChar.AutoSize = true;
-            this.lblChar.Location = new System.Drawing.Point(669, 150);
+            this.lblChar.Location = new System.Drawing.Point(780, 136);
+            this.lblChar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblChar.Name = "lblChar";
-            this.lblChar.Size = new System.Drawing.Size(32, 13);
+            this.lblChar.Size = new System.Drawing.Size(36, 12);
             this.lblChar.TabIndex = 5;
             this.lblChar.Text = "Char:";
             // 
@@ -638,9 +750,10 @@ namespace GustFontEditor
             // 
             this.lblY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblY.AutoSize = true;
-            this.lblY.Location = new System.Drawing.Point(698, 175);
+            this.lblY.Location = new System.Drawing.Point(814, 160);
+            this.lblY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblY.Name = "lblY";
-            this.lblY.Size = new System.Drawing.Size(17, 13);
+            this.lblY.Size = new System.Drawing.Size(17, 12);
             this.lblY.TabIndex = 4;
             this.lblY.Text = "Y:";
             // 
@@ -648,9 +761,10 @@ namespace GustFontEditor
             // 
             this.lblX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblX.AutoSize = true;
-            this.lblX.Location = new System.Drawing.Point(600, 175);
+            this.lblX.Location = new System.Drawing.Point(700, 160);
+            this.lblX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblX.Name = "lblX";
-            this.lblX.Size = new System.Drawing.Size(17, 13);
+            this.lblX.Size = new System.Drawing.Size(17, 12);
             this.lblX.TabIndex = 3;
             this.lblX.Text = "X:";
             // 
@@ -658,26 +772,27 @@ namespace GustFontEditor
             // 
             this.lblID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblID.AutoSize = true;
-            this.lblID.Location = new System.Drawing.Point(600, 150);
+            this.lblID.Location = new System.Drawing.Point(700, 136);
+            this.lblID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblID.Name = "lblID";
-            this.lblID.Size = new System.Drawing.Size(24, 13);
+            this.lblID.Size = new System.Drawing.Size(24, 12);
             this.lblID.TabIndex = 2;
             this.lblID.Text = "ID: ";
             // 
-            // pbCharVeiwer
+            // pbCharViewer
             // 
-            this.pbCharVeiwer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pbCharViewer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbCharVeiwer.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.pbCharVeiwer.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pbCharVeiwer.Location = new System.Drawing.Point(592, 0);
-            this.pbCharVeiwer.Margin = new System.Windows.Forms.Padding(0);
-            this.pbCharVeiwer.Name = "pbCharVeiwer";
-            this.pbCharVeiwer.Size = new System.Drawing.Size(242, 144);
-            this.pbCharVeiwer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pbCharVeiwer.TabIndex = 1;
-            this.pbCharVeiwer.TabStop = false;
-            this.pbCharVeiwer.DoubleClick += new System.EventHandler(this.pbCharVeiwer_DoubleClick);
+            this.pbCharViewer.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.pbCharViewer.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pbCharViewer.Location = new System.Drawing.Point(691, 0);
+            this.pbCharViewer.Margin = new System.Windows.Forms.Padding(0);
+            this.pbCharViewer.Name = "pbCharViewer";
+            this.pbCharViewer.Size = new System.Drawing.Size(282, 131);
+            this.pbCharViewer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbCharViewer.TabIndex = 1;
+            this.pbCharViewer.TabStop = false;
+            this.pbCharViewer.DoubleClick += new System.EventHandler(this.pbCharViewer_DoubleClick);
             // 
             // tabRedraw
             // 
@@ -700,20 +815,34 @@ namespace GustFontEditor
             this.tabRedraw.Controls.Add(this.lblImportantList);
             this.tabRedraw.Controls.Add(this.pbPreview);
             this.tabRedraw.Location = new System.Drawing.Point(4, 22);
+            this.tabRedraw.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabRedraw.Name = "tabRedraw";
-            this.tabRedraw.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRedraw.Size = new System.Drawing.Size(834, 305);
+            this.tabRedraw.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabRedraw.Size = new System.Drawing.Size(974, 280);
             this.tabRedraw.TabIndex = 1;
             this.tabRedraw.Text = "Redraw";
             this.tabRedraw.UseVisualStyleBackColor = true;
+            // 
+            // btnLoadLST
+            // 
+            this.btnLoadLST.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoadLST.Location = new System.Drawing.Point(709, 247);
+            this.btnLoadLST.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnLoadLST.Name = "btnLoadLST";
+            this.btnLoadLST.Size = new System.Drawing.Size(88, 21);
+            this.btnLoadLST.TabIndex = 17;
+            this.btnLoadLST.Text = "Load LST";
+            this.btnLoadLST.UseVisualStyleBackColor = true;
+            this.btnLoadLST.Click += new System.EventHandler(this.btnLoadLST_Click);
             // 
             // cbTrimming
             // 
             this.cbTrimming.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbTrimming.AutoSize = true;
-            this.cbTrimming.Location = new System.Drawing.Point(758, 243);
+            this.cbTrimming.Location = new System.Drawing.Point(886, 224);
+            this.cbTrimming.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cbTrimming.Name = "cbTrimming";
-            this.cbTrimming.Size = new System.Drawing.Size(68, 17);
+            this.cbTrimming.Size = new System.Drawing.Size(78, 16);
             this.cbTrimming.TabIndex = 16;
             this.cbTrimming.Text = "Trimming";
             this.cbTrimming.UseVisualStyleBackColor = true;
@@ -722,9 +851,10 @@ namespace GustFontEditor
             // 
             this.cbRemapEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbRemapEnabled.AutoSize = true;
-            this.cbRemapEnabled.Location = new System.Drawing.Point(761, 217);
+            this.cbRemapEnabled.Location = new System.Drawing.Point(894, 200);
+            this.cbRemapEnabled.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cbRemapEnabled.Name = "cbRemapEnabled";
-            this.cbRemapEnabled.Size = new System.Drawing.Size(65, 17);
+            this.cbRemapEnabled.Size = new System.Drawing.Size(70, 16);
             this.cbRemapEnabled.TabIndex = 15;
             this.cbRemapEnabled.Text = "Enabled";
             this.cbRemapEnabled.UseVisualStyleBackColor = true;
@@ -732,9 +862,10 @@ namespace GustFontEditor
             // btnPreview
             // 
             this.btnPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPreview.Location = new System.Drawing.Point(689, 268);
+            this.btnPreview.Location = new System.Drawing.Point(804, 247);
+            this.btnPreview.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnPreview.Name = "btnPreview";
-            this.btnPreview.Size = new System.Drawing.Size(66, 23);
+            this.btnPreview.Size = new System.Drawing.Size(77, 21);
             this.btnPreview.TabIndex = 14;
             this.btnPreview.Text = "Preview";
             this.btnPreview.UseVisualStyleBackColor = true;
@@ -744,9 +875,10 @@ namespace GustFontEditor
             // 
             this.tbPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbPreview.Location = new System.Drawing.Point(333, 270);
+            this.tbPreview.Location = new System.Drawing.Point(388, 249);
+            this.tbPreview.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbPreview.Name = "tbPreview";
-            this.tbPreview.Size = new System.Drawing.Size(267, 20);
+            this.tbPreview.Size = new System.Drawing.Size(311, 21);
             this.tbPreview.TabIndex = 13;
             this.tbPreview.Text = "The quick brown fox jumps over the lazy dog";
             this.tbPreview.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbPreview_KeyDown);
@@ -755,28 +887,31 @@ namespace GustFontEditor
             // 
             this.lblPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblPreview.AutoSize = true;
-            this.lblPreview.Location = new System.Drawing.Point(282, 273);
+            this.lblPreview.Location = new System.Drawing.Point(329, 252);
+            this.lblPreview.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPreview.Name = "lblPreview";
-            this.lblPreview.Size = new System.Drawing.Size(48, 13);
+            this.lblPreview.Size = new System.Drawing.Size(54, 12);
             this.lblPreview.TabIndex = 12;
             this.lblPreview.Text = "Preview:";
             // 
             // tbSize
             // 
             this.tbSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tbSize.Location = new System.Drawing.Point(230, 270);
+            this.tbSize.Location = new System.Drawing.Point(268, 249);
+            this.tbSize.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbSize.Name = "tbSize";
-            this.tbSize.Size = new System.Drawing.Size(46, 20);
+            this.tbSize.Size = new System.Drawing.Size(53, 21);
             this.tbSize.TabIndex = 11;
-            this.tbSize.Text = "38,0";
+            this.tbSize.Text = "36";
             // 
             // lblSize
             // 
             this.lblSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblSize.AutoSize = true;
-            this.lblSize.Location = new System.Drawing.Point(194, 273);
+            this.lblSize.Location = new System.Drawing.Point(226, 252);
+            this.lblSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSize.Name = "lblSize";
-            this.lblSize.Size = new System.Drawing.Size(30, 13);
+            this.lblSize.Size = new System.Drawing.Size(34, 12);
             this.lblSize.TabIndex = 10;
             this.lblSize.Text = "Size:";
             // 
@@ -784,39 +919,41 @@ namespace GustFontEditor
             // 
             this.lblFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblFont.AutoSize = true;
-            this.lblFont.Location = new System.Drawing.Point(52, 273);
+            this.lblFont.Location = new System.Drawing.Point(61, 252);
+            this.lblFont.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFont.Name = "lblFont";
-            this.lblFont.Size = new System.Drawing.Size(31, 13);
+            this.lblFont.Size = new System.Drawing.Size(33, 12);
             this.lblFont.TabIndex = 9;
             this.lblFont.Text = "Font:";
             // 
             // tbFacename
             // 
             this.tbFacename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tbFacename.Location = new System.Drawing.Point(89, 270);
+            this.tbFacename.Location = new System.Drawing.Point(104, 249);
+            this.tbFacename.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbFacename.Name = "tbFacename";
-            this.tbFacename.Size = new System.Drawing.Size(99, 20);
+            this.tbFacename.Size = new System.Drawing.Size(115, 21);
             this.tbFacename.TabIndex = 8;
-            this.tbFacename.Text = "Consolas";
+            this.tbFacename.Text = "-파랑새M";
             // 
             // tbRemap
             // 
             this.tbRemap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbRemap.Location = new System.Drawing.Point(89, 215);
+            this.tbRemap.Location = new System.Drawing.Point(104, 198);
+            this.tbRemap.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbRemap.Name = "tbRemap";
-            this.tbRemap.Size = new System.Drawing.Size(666, 20);
+            this.tbRemap.Size = new System.Drawing.Size(776, 21);
             this.tbRemap.TabIndex = 7;
-            this.tbRemap.Text = "------------------------------------------------------------------------ｱｰｯﾔﾒｵｻｴｮ" +
-    "ｪｬｭ｡ｩｨｫｧｲｳﾌﾈｹｺﾙﾂﾀﾊﾇﾕﾃﾍﾁﾉﾓﾚ";
             // 
             // lblRemapList
             // 
             this.lblRemapList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRemapList.AutoSize = true;
-            this.lblRemapList.Location = new System.Drawing.Point(20, 218);
+            this.lblRemapList.Location = new System.Drawing.Point(23, 201);
+            this.lblRemapList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRemapList.Name = "lblRemapList";
-            this.lblRemapList.Size = new System.Drawing.Size(63, 13);
+            this.lblRemapList.Size = new System.Drawing.Size(73, 12);
             this.lblRemapList.TabIndex = 6;
             this.lblRemapList.Text = "Remap List:";
             // 
@@ -824,30 +961,32 @@ namespace GustFontEditor
             // 
             this.tbRedraw.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbRedraw.Location = new System.Drawing.Point(89, 189);
+            this.tbRedraw.Location = new System.Drawing.Point(104, 174);
+            this.tbRedraw.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbRedraw.Name = "tbRedraw";
-            this.tbRedraw.Size = new System.Drawing.Size(737, 20);
+            this.tbRedraw.Size = new System.Drawing.Size(859, 21);
             this.tbRedraw.TabIndex = 5;
-            this.tbRedraw.Text = " 0123456789ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyz+!?,.:;~¿ÑñôòÕÛÔÎÊ" +
-    "ÌÍÁÉÈÂÇÒÓìèÙÚùâàêçõãíáéóú";
+            this.tbRedraw.Text = " 0123456789ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyz+!?,.:;~\r\n";
             this.tbRedraw.TextChanged += new System.EventHandler(this.RedrawTextChanged);
             // 
             // lblRedrawList
             // 
             this.lblRedrawList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRedrawList.AutoSize = true;
-            this.lblRedrawList.Location = new System.Drawing.Point(17, 192);
+            this.lblRedrawList.Location = new System.Drawing.Point(20, 177);
+            this.lblRedrawList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRedrawList.Name = "lblRedrawList";
-            this.lblRedrawList.Size = new System.Drawing.Size(66, 13);
+            this.lblRedrawList.Size = new System.Drawing.Size(76, 12);
             this.lblRedrawList.TabIndex = 4;
             this.lblRedrawList.Text = "Redraw List:";
             // 
             // btnRedraw
             // 
             this.btnRedraw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRedraw.Location = new System.Drawing.Point(761, 268);
+            this.btnRedraw.Location = new System.Drawing.Point(888, 247);
+            this.btnRedraw.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnRedraw.Name = "btnRedraw";
-            this.btnRedraw.Size = new System.Drawing.Size(65, 23);
+            this.btnRedraw.Size = new System.Drawing.Size(76, 21);
             this.btnRedraw.TabIndex = 3;
             this.btnRedraw.Text = "Redraw";
             this.btnRedraw.UseVisualStyleBackColor = true;
@@ -857,19 +996,21 @@ namespace GustFontEditor
             // 
             this.tbImportantList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbImportantList.Location = new System.Drawing.Point(89, 241);
+            this.tbImportantList.Location = new System.Drawing.Point(104, 222);
+            this.tbImportantList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbImportantList.Name = "tbImportantList";
-            this.tbImportantList.Size = new System.Drawing.Size(666, 20);
+            this.tbImportantList.Size = new System.Drawing.Size(776, 21);
             this.tbImportantList.TabIndex = 2;
-            this.tbImportantList.Text = "0:10,10:31";
+            this.tbImportantList.Text = "0:10,10:31,144:286";
             // 
             // lblImportantList
             // 
             this.lblImportantList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblImportantList.AutoSize = true;
-            this.lblImportantList.Location = new System.Drawing.Point(10, 244);
+            this.lblImportantList.Location = new System.Drawing.Point(12, 225);
+            this.lblImportantList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblImportantList.Name = "lblImportantList";
-            this.lblImportantList.Size = new System.Drawing.Size(73, 13);
+            this.lblImportantList.Size = new System.Drawing.Size(85, 12);
             this.lblImportantList.TabIndex = 1;
             this.lblImportantList.Text = "Important List:";
             // 
@@ -882,7 +1023,7 @@ namespace GustFontEditor
             this.pbPreview.Location = new System.Drawing.Point(0, 0);
             this.pbPreview.Margin = new System.Windows.Forms.Padding(0);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(834, 183);
+            this.pbPreview.Size = new System.Drawing.Size(973, 169);
             this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbPreview.TabIndex = 0;
             this.pbPreview.TabStop = false;
@@ -894,18 +1035,20 @@ namespace GustFontEditor
             this.tabAbout.Controls.Add(this.lblToolTitle);
             this.tabAbout.Controls.Add(this.wbEgg);
             this.tabAbout.Location = new System.Drawing.Point(4, 22);
+            this.tabAbout.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabAbout.Name = "tabAbout";
-            this.tabAbout.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAbout.Size = new System.Drawing.Size(834, 305);
+            this.tabAbout.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabAbout.Size = new System.Drawing.Size(974, 280);
             this.tabAbout.TabIndex = 2;
             this.tabAbout.Text = "About";
             this.tabAbout.UseVisualStyleBackColor = true;
             // 
             // btnSecret
             // 
-            this.btnSecret.Location = new System.Drawing.Point(736, 276);
+            this.btnSecret.Location = new System.Drawing.Point(859, 255);
+            this.btnSecret.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSecret.Name = "btnSecret";
-            this.btnSecret.Size = new System.Drawing.Size(92, 23);
+            this.btnSecret.Size = new System.Drawing.Size(107, 21);
             this.btnSecret.TabIndex = 2;
             this.btnSecret.Text = "Secret Options";
             this.btnSecret.UseVisualStyleBackColor = true;
@@ -916,9 +1059,10 @@ namespace GustFontEditor
             // 
             this.lblAuthor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblAuthor.AutoSize = true;
-            this.lblAuthor.Location = new System.Drawing.Point(728, 69);
+            this.lblAuthor.Location = new System.Drawing.Point(849, 64);
+            this.lblAuthor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAuthor.Name = "lblAuthor";
-            this.lblAuthor.Size = new System.Drawing.Size(92, 13);
+            this.lblAuthor.Size = new System.Drawing.Size(109, 12);
             this.lblAuthor.TabIndex = 1;
             this.lblAuthor.Text = "By Marcussacana";
             // 
@@ -927,9 +1071,10 @@ namespace GustFontEditor
             this.lblToolTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblToolTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.lblToolTitle.Location = new System.Drawing.Point(6, 3);
+            this.lblToolTitle.Location = new System.Drawing.Point(7, 3);
+            this.lblToolTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblToolTitle.Name = "lblToolTitle";
-            this.lblToolTitle.Size = new System.Drawing.Size(820, 79);
+            this.lblToolTitle.Size = new System.Drawing.Size(957, 73);
             this.lblToolTitle.TabIndex = 0;
             this.lblToolTitle.Text = "Gust Font Editor";
             this.lblToolTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -940,13 +1085,13 @@ namespace GustFontEditor
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.wbEgg.IsWebBrowserContextMenuEnabled = false;
-            this.wbEgg.Location = new System.Drawing.Point(0, 85);
+            this.wbEgg.Location = new System.Drawing.Point(0, 78);
             this.wbEgg.Margin = new System.Windows.Forms.Padding(0);
-            this.wbEgg.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbEgg.MinimumSize = new System.Drawing.Size(23, 18);
             this.wbEgg.Name = "wbEgg";
             this.wbEgg.ScriptErrorsSuppressed = true;
             this.wbEgg.ScrollBarsEnabled = false;
-            this.wbEgg.Size = new System.Drawing.Size(831, 217);
+            this.wbEgg.Size = new System.Drawing.Size(969, 200);
             this.wbEgg.TabIndex = 3;
             this.wbEgg.Visible = false;
             this.wbEgg.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.Triggered);
@@ -960,37 +1105,59 @@ namespace GustFontEditor
             // fdExecutable
             // 
             this.fdExecutable.DefaultExt = "exe";
-            this.fdExecutable.Filter = "All Executables|*.exe";
+            this.fdExecutable.Filter = "All Executables|*.exe|All Files|*.*";
             this.fdExecutable.FileOk += new System.ComponentModel.CancelEventHandler(this.fdExecutable_FileOk);
             // 
-            // btnLoadLST
+            // statusStrip1
             // 
-            this.btnLoadLST.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoadLST.Location = new System.Drawing.Point(608, 268);
-            this.btnLoadLST.Name = "btnLoadLST";
-            this.btnLoadLST.Size = new System.Drawing.Size(75, 23);
-            this.btnLoadLST.TabIndex = 17;
-            this.btnLoadLST.Text = "Load LST";
-            this.btnLoadLST.UseVisualStyleBackColor = true;
-            this.btnLoadLST.Click += new System.EventHandler(this.btnLoadLST_Click);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tslState,
+            this.tslStatus,
+            this.tspStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 439);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(985, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tslStatus
+            // 
+            this.tslStatus.Name = "tslStatus";
+            this.tslStatus.Size = new System.Drawing.Size(0, 17);
+            // 
+            // tspStatus
+            // 
+            this.tspStatus.Name = "tspStatus";
+            this.tspStatus.Size = new System.Drawing.Size(100, 16);
+            this.tspStatus.Visible = false;
+            // 
+            // tslState
+            // 
+            this.tslState.Name = "tslState";
+            this.tslState.Size = new System.Drawing.Size(26, 17);
+            this.tslState.Text = "Idle";
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 481);
+            this.ClientSize = new System.Drawing.Size(985, 461);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.pgRedraw);
             this.Controls.Add(this.gbGameInfo);
-            this.MinimumSize = new System.Drawing.Size(860, 520);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MinimumSize = new System.Drawing.Size(1001, 500);
             this.Name = "Main";
             this.Text = "Gust Font Editor";
             this.gbGameInfo.ResumeLayout(false);
             this.gbGameInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTextureWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTextureHeight)).EndInit();
             this.pgRedraw.ResumeLayout(false);
             this.pgGlyphs.ResumeLayout(false);
             this.pgGlyphs.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudBottom)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRigth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTop)).EndInit();
             this.pnFont.ResumeLayout(false);
@@ -1000,13 +1167,16 @@ namespace GustFontEditor
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbCharVeiwer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCharViewer)).EndInit();
             this.tabRedraw.ResumeLayout(false);
             this.tabRedraw.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.tabAbout.ResumeLayout(false);
             this.tabAbout.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1034,7 +1204,7 @@ namespace GustFontEditor
         private System.Windows.Forms.OpenFileDialog fdOpenTexture;
         private System.Windows.Forms.OpenFileDialog fdExecutable;
         private System.Windows.Forms.Button btnRetryOffsetFind;
-        private System.Windows.Forms.PictureBox pbCharVeiwer;
+        private System.Windows.Forms.PictureBox pbCharViewer;
         private System.Windows.Forms.TextBox tbChar;
         private System.Windows.Forms.NumericUpDown nudY;
         private System.Windows.Forms.NumericUpDown nudHeight;
@@ -1049,10 +1219,10 @@ namespace GustFontEditor
         private System.Windows.Forms.Label lblX;
         private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.NumericUpDown nudBottom;
-        private System.Windows.Forms.NumericUpDown nudRigth;
+        private System.Windows.Forms.NumericUpDown nudRight;
         private System.Windows.Forms.NumericUpDown nudLeft;
         private System.Windows.Forms.NumericUpDown nudTop;
-        private System.Windows.Forms.Label lblPaddingRigth;
+        private System.Windows.Forms.Label lblPaddingRight;
         private System.Windows.Forms.Label lblPaddingLeft;
         private System.Windows.Forms.Label lblPaddingBottom;
         private System.Windows.Forms.Label lblPaddingTop;
@@ -1062,7 +1232,6 @@ namespace GustFontEditor
         private System.Windows.Forms.Button btnRedraw;
         private System.Windows.Forms.TextBox tbImportantList;
         private System.Windows.Forms.Label lblImportantList;
-        private System.Windows.Forms.TextBox tbRemap;
         private System.Windows.Forms.Label lblRemapList;
         private System.Windows.Forms.TextBox tbSize;
         private System.Windows.Forms.Label lblSize;
@@ -1080,6 +1249,14 @@ namespace GustFontEditor
         private System.Windows.Forms.Button btnSecret;
         private System.Windows.Forms.WebBrowser wbEgg;
         private System.Windows.Forms.Button btnLoadLST;
+        private System.Windows.Forms.TextBox tbRemap;
+        private System.Windows.Forms.Button btnDefrag;
+        private System.Windows.Forms.NumericUpDown nudTextureWidth;
+        private System.Windows.Forms.NumericUpDown nudTextureHeight;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tslStatus;
+        private System.Windows.Forms.ToolStripProgressBar tspStatus;
+        private System.Windows.Forms.ToolStripStatusLabel tslState;
     }
 }
 

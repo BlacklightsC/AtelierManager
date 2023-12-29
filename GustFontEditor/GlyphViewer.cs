@@ -13,7 +13,7 @@ namespace GustFontEditor
         //Before draw, he sum PaddingLeft to X and PaddingTop to Y
         //Then he draw the character in the new coordinates
         //Before begin draw the next char, he sum to the next char
-        //X point the PaddingRigth and in the Height of the next line
+        //X point the PaddingRight and in the Height of the next line
         //will sum the PaddingBottom if the current Height is smaller than the new one.
 
         public static Bitmap ApplyPadding(this Bitmap Texture, Glyph Info)
@@ -27,8 +27,8 @@ namespace GustFontEditor
             int NewWidth = NewX + Info.Width;
             int NewHeight = NewY + Info.Height;
 
-            if (NewWidth < Info.PaddingRigth)
-                NewWidth = Info.PaddingRigth;
+            if (NewWidth < Info.PaddingRight)
+                NewWidth = Info.PaddingRight;
             if (NewHeight < Info.PaddingBottom)
                 NewHeight = Info.PaddingBottom;
 

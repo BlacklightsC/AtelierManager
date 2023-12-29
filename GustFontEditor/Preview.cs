@@ -16,8 +16,8 @@ namespace GustFontEditor
 
                 MeasuredWith += Glyph.PaddingLeft;
 
-                if (Glyph.PaddingRigth != 0)
-                    MeasuredWith += Glyph.PaddingRigth;
+                if (Glyph.PaddingRight != 0)
+                    MeasuredWith += Glyph.PaddingRight;
                 else
                     MeasuredWith += Glyph.Width;
 
@@ -39,8 +39,8 @@ namespace GustFontEditor
                     }
                     X += Glyph.PaddingLeft;
 
-                    if (Glyph.PaddingRigth != 0)
-                        X += Glyph.PaddingRigth;
+                    if (Glyph.PaddingRight != 0)
+                        X += Glyph.PaddingRight;
                     else
                         X += Glyph.Width;
                 }

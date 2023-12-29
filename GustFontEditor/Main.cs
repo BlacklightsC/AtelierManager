@@ -9,6 +9,8 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 
 namespace GustFontEditor
@@ -56,7 +58,8 @@ namespace GustFontEditor
             }
 
             OriTexture = (Bitmap)Image.FromStream(FontBuffer);
-            
+            nudTextureWidth.Value = OriTexture.Width;
+            nudTextureHeight.Value = OriTexture.Height;
             Restore();
             FindGlyphCount();
         }
@@ -68,10 +71,20 @@ namespace GustFontEditor
         private void fdExecutable_FileOk(object sender, CancelEventArgs e)
         {
             tbExePath.Text = fdExecutable.FileName;
-            tbGame.Text = FileVersionInfo.GetVersionInfo(fdExecutable.FileName)?.FileDescription.Trim(' ', '"');
-            TableOffset = TableFinder.FindTableOffset(fdExecutable.FileName);
-            tbTableOffset.Text = $"0x{TableOffset:X8}";
-            FindGlyphCount();
+            if (Path.GetExtension(tbExePath.Text) == ".exe")
+            {
+                tbGame.Text = FileVersionInfo.GetVersionInfo(fdExecutable.FileName)?.FileDescription.Trim(' ', '"');
+                TableOffset = TableFinder.FindTableOffset(fdExecutable.FileName);
+                tbTableOffset.Text = $"0x{TableOffset:X8}";
+                FindGlyphCount();
+            }
+            else
+            {
+                tbGame.Text = "Pure Glyph Data";
+                TableOffset = 0;
+                tbTableOffset.Text = $"0x{TableOffset:X8}";
+                tbGlyphCount.Text = (new FileInfo(fdExecutable.FileName).Length / 0x1C).ToString();
+            }
         }
 
         private void btnRetryOffsetFind_Click(object sender, EventArgs e)
@@ -101,15 +114,34 @@ namespace GustFontEditor
             btnReload.Text = "Reload Font";
             GlyphCount = int.Parse(tbGlyphCount.Text.Trim());            
             TableOffset = int.Parse(tbTableOffset.Text.Trim().Replace("0x", ""), NumberStyles.HexNumber);
-
+            SelectedGlyph = -1;
             FontBuffer.Position = 0;
             OriTexture = Image.FromStream(FontBuffer) as Bitmap;
             Restore();
 
             Glyphs = GlyphViewer.LoadGlyphs(fdExecutable.FileName, TableOffset, GlyphCount);
             Areas = GlyphViewer.CreateRectangles(Glyphs);
-
-
+            StringBuilder sb = new StringBuilder();
+            /*
+            for (int i = 1, start = -1, count = 0; i < Glyphs.Length; i++)
+            {
+                char c = Glyphs[i].Char;
+                bool b = 'ㄱ' <= c && c <= 'ㅎ' || '가' <= c && c <= '힣';
+                if (start == -1 && b) start = i;
+                else if (start != -1 && !b)
+                {
+                    if (i - start == 1) sb.Append($"{start}");
+                    else sb.Append($"{start}:{i - 1}");
+                    start = -1;
+                    if (++count == 12) count = 0;
+                    else sb.Append(",");
+                }
+            }*/
+            for (int i = 1; i < Glyphs.Length; i++)
+            {
+                sb.Append(Glyphs[i].Char.ToString());
+            }
+            if (sb != null && sb.Length > 0) Clipboard.SetText(sb.ToString());
             GDI.DrawRectangles(Areas, SelectedGlyph);
             GDI.Flush();
         }
@@ -131,14 +163,15 @@ namespace GustFontEditor
 
 
             var OutTexPath = Path.Combine(Path.GetDirectoryName(tbTexturePath.Text), Path.GetFileNameWithoutExtension(tbTexturePath.Text) + "-new" + Path.GetExtension(tbTexturePath.Text));
-            var OutExePath = Path.Combine(Path.GetDirectoryName(tbExePath.Text), Path.GetFileNameWithoutExtension(tbExePath.Text) + "-new.exe");
+            var OutTexPngPath = Path.Combine(Path.GetDirectoryName(tbTexturePath.Text), Path.GetFileNameWithoutExtension(tbTexturePath.Text) + "-new.png");
+            var OutExePath = Path.Combine(Path.GetDirectoryName(tbExePath.Text), Path.GetFileNameWithoutExtension(tbExePath.Text) + "-new" + Path.GetExtension(tbExePath.Text));
 
             if (DDSTexture != null)
             {
                 using (Stream Output = File.Create(OutTexPath))
                     DDSTexture.Export(Output, new Bitmap[] { OriTexture });
-            } else
-                OriTexture.Save(OutTexPath, ImageFormat.Png);
+            }
+            OriTexture.Save(OutTexPngPath, ImageFormat.Png);
 
             File.WriteAllBytes(OutExePath, Executable);
 
@@ -150,7 +183,7 @@ namespace GustFontEditor
         #region Viewer
 
         string EditorPath = null;
-        private void pbCharVeiwer_DoubleClick(object sender, EventArgs e)
+        private void pbCharViewer_DoubleClick(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(tbExePath.Text) || string.IsNullOrEmpty(tbTexturePath.Text) || Areas == null)
                 return;
@@ -193,8 +226,8 @@ namespace GustFontEditor
             var Glyph = Glyphs[SelectedGlyph];
             var Area = Areas[SelectedGlyph];
 
-            using (var Copy = OriTexture.Clone(Area, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
-                Copy.Save(tmp, System.Drawing.Imaging.ImageFormat.Png);
+            using (var Copy = OriTexture.Clone(Area, PixelFormat.Format32bppArgb))
+                Copy.Save(tmp, ImageFormat.Png);
 
             var OriTime = new FileInfo(tmp).LastWriteTimeUtc;
             var Proc = Process.Start(EditorPath, tmp);
@@ -251,7 +284,7 @@ namespace GustFontEditor
 
         private void SetSelection(int NewSelection)
         {
-            pbCharVeiwer.Cursor = Cursors.Hand;
+            pbCharViewer.Cursor = Cursors.Hand;
 
             int OldSel = SelectedGlyph;
             if (OldSel == -1)
@@ -277,7 +310,7 @@ namespace GustFontEditor
             nudTop.Value = Glyphs[NewSelection].PaddingTop;
             nudBottom.Value = Glyphs[NewSelection].PaddingBottom;
             nudLeft.Value = Glyphs[NewSelection].PaddingLeft;
-            nudRigth.Value = Glyphs[NewSelection].PaddingRigth;
+            nudRight.Value = Glyphs[NewSelection].PaddingRight;
 
             PreviewPadding(NewSelection);
 
@@ -301,17 +334,16 @@ namespace GustFontEditor
                 {
                     X = Glyph.PaddingLeft == -1 ? 0 : Glyph.PaddingLeft,
                     Y = Glyph.PaddingTop == -1 ? 0 : Glyph.PaddingTop,
+                    Width = Glyph.PaddingRight <= 0 ? NewImg.Width - 1 : Glyph.PaddingRight,
+                    Height = Glyph.PaddingBottom <= 0 ? NewImg.Height - 1 : Glyph.PaddingBottom
                 };
-
-                PaddingRect.Width = Glyph.PaddingRigth <= 0 ? NewImg.Width - 1 : Glyph.PaddingRigth;
-                PaddingRect.Height = Glyph.PaddingBottom <= 0 ? NewImg.Height - 1 : Glyph.PaddingBottom;
 
                 g.DrawRectangle(Pens.Blue, PaddingRect);
                 g.Flush();
             }
 
-            pbCharVeiwer.Image?.Dispose();
-            pbCharVeiwer.Image = NewImg;
+            pbCharViewer.Image?.Dispose();
+            pbCharViewer.Image = NewImg;
         }
 
         private void Restore() {
@@ -406,11 +438,11 @@ namespace GustFontEditor
             }
         }
 
-        private void nudRigth_ValueChanged(object sender, EventArgs e)
+        private void nudRight_ValueChanged(object sender, EventArgs e)
         {
             
             if (SelectedGlyph >= 0 && SelectedGlyph < Glyphs.Length) {
-                Glyphs[SelectedGlyph].PaddingRigth = (int)nudRigth.Value;
+                Glyphs[SelectedGlyph].PaddingRight = (int)nudRight.Value;
                 PreviewPadding();
             }
         }
@@ -479,6 +511,10 @@ namespace GustFontEditor
                 return true;
             });
 
+            tslState.Text = "Redrawing... ";
+            SetStatus(0, tbRedraw.Text.Length);
+            StringBuilder sb1 = new StringBuilder();
+            StringBuilder sb2 = new StringBuilder();
             for (int i = 0; i < tbRedraw.Text.Length; i++) {
                 char TargetChar = tbRedraw.Text[i];
                 char? RemapChar = Remap ? (char?)tbRemap.Text[i] : null;
@@ -515,10 +551,14 @@ namespace GustFontEditor
                     }
                 }
 
-                NewGlyph.Char = RemapChar ?? TargetChar;
+                NewGlyph.Char = (RemapChar ?? TargetChar) == '-' ? OriGlyph.Char : TargetChar;
+                sb1.Append(TargetChar);
+                sb2.Append(NewGlyph.Char);
 
                 NewGlyph.X = OriGlyph.X;
                 NewGlyph.Y = OriGlyph.Y;
+                //NewGlyph.X = (ushort)(OriGlyph.X + (OriGlyph.Width - NewGlyph.Texture.Width) / 2);
+                //NewGlyph.Y = (ushort)(OriGlyph.Y + (OriGlyph.Height - NewGlyph.Texture.Height) / 2);
 
                 if (NewGlyph.Texture.Width > OriGlyph.Width || NewGlyph.Texture.Height > OriGlyph.Height)
                 {
@@ -532,29 +572,36 @@ namespace GustFontEditor
                 using (Graphics g = Graphics.FromImage(OriTexture)) {
                     g.CompositingQuality = CompositingQuality.HighQuality;
                     g.CompositingMode = CompositingMode.SourceCopy;
-
+                    
                     g.FillRectangle(Brushes.Transparent, OriGlyph.CreateRectangle());
                     g.DrawImageUnscaled(NewGlyph.Texture, NewGlyph.X, NewGlyph.Y);
                     g.Flush();
                 }
-
-                if (cbTrimming.Checked) {
+                if (NewGlyph.PaddingLeft < 1) NewGlyph.PaddingLeft = 1;
+                if (NewGlyph.PaddingRight < NewGlyph.Width + NewGlyph.PaddingLeft + 1) NewGlyph.PaddingRight = NewGlyph.Width + NewGlyph.PaddingLeft + 1;
+                if (cbTrimming.Checked)
+                {
                     NewGlyph.PaddingLeft--;
-                    NewGlyph.PaddingRigth--;
+                    NewGlyph.PaddingRight--;
                 }
+                NewGlyph.PaddingTop += 8;
 
                 Glyphs[OriIndex] = NewGlyph;
                 Areas[OriIndex] = NewGlyph.CreateRectangle();
                 Skips.Add(OriIndex);
 
+                SetStatus(i + 1, tbRedraw.Text.Length);
                 Application.DoEvents();
             }
 
+            SetStatus(0, 0);
             Restore();
 
             using (Graphics g = Graphics.FromImage(pbMainTexture.Image))
                 g.DrawRectangles(Pens.Red, Areas);
-
+            tbRedraw.Text = sb1.ToString();
+            tbRemap.Text = sb2.ToString();
+            Clipboard.SetText(sb1.ToString() + "\r\n" + sb2.ToString());
             btnRedraw.Enabled = true;
 
             MessageBox.Show("Font Updated!", "Gust Font Editor", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -611,6 +658,103 @@ namespace GustFontEditor
                     tbRedraw.Text += PsyChar;
                     tbRemap.Text += FakChar;
                 }
+            }
+        }
+
+        private void btnDefrag_Click(object sender, EventArgs e)
+        {
+            if (Glyphs == null) return;
+            tslState.Text = "Defraging... ";
+            SetStatus(0, Glyphs.Length);
+            List<Glyph> aa = new List<Glyph>(Glyphs);
+            List<Glyph> glyphs = new List<Glyph>(Glyphs);
+            Rectangle[] newAreas = new Rectangle[Areas.Length];
+            glyphs.Sort((a, b) =>
+            {
+                int v = (b.Width + (b.Height << 16)) - (a.Width + (a.Height << 16));
+                return v == 0 ? (int)a.UTF8 - (int)b.UTF8 : v;
+            });
+            int width = (int)nudTextureWidth.Value;
+            int height = (int)nudTextureHeight.Value;
+            Bitmap newTexture = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(newTexture))
+            {
+                g.FillRectangle(Brushes.Transparent, new Rectangle(0, 0, width, height));
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.CompositingMode = CompositingMode.SourceCopy;
+                for (int i = 0; i < glyphs.Count; i++)
+                {
+                    var item = glyphs[i];
+                    int index = aa.FindIndex(it => it.UTF8 == item.UTF8);
+                    Rectangle Area;
+                    for (int Y = 0; Y < height; Y += item.Height)
+                        for (int X = 0; X < width; X += item.Width)
+                        {
+                            Area = new Rectangle(X, Y, item.Width + 1, item.Height + 1);
+                            if (newTexture.IsEmpty(Area, newAreas)) goto Next;
+                        }
+                    continue;
+                Next:
+                    var Rectangle = Area;
+                    do
+                    {
+                        Area = Rectangle;
+                        Rectangle.Y--;
+                    } while (newTexture.IsEmpty(Rectangle, newAreas));
+                    Rectangle = Area;
+                    do
+                    {
+                        Area = Rectangle;
+                        Rectangle.X--;
+                    } while (newTexture.IsEmpty(Rectangle, newAreas));
+                    item.X = (ushort)Area.X;
+                    item.Y = (ushort)Area.Y;
+                    Glyphs[index] = item;
+                    newAreas[index] = Area;
+                    using (var Img = OriTexture.Clone(Areas[index], PixelFormat.Format32bppArgb))
+                    {
+                        //g.FillRectangle(Brushes.Transparent, newAreas[index]);
+                        g.DrawImageUnscaled(Img, item.X, item.Y);
+                        g.Flush();
+                    }
+                    SetStatus(i + 1, Glyphs.Length);
+                    Application.DoEvents();
+                }
+            }
+            for (int i = 0; i < newAreas.Length; i++)
+            {
+                newAreas[i].Width--;
+                newAreas[i].Height--;
+            }
+            SetStatus(0, 0);
+            Areas = newAreas;
+            OriTexture.Dispose();
+            OriTexture = newTexture;
+            
+            Restore();
+            using (Graphics g = Graphics.FromImage(pbMainTexture.Image))
+                g.DrawRectangles(Pens.Red, Areas);
+            MessageBox.Show("Defrag Finished!", "Gust Font Editor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void SetStatus(int current, int max)
+        {
+            if (max == 0)
+            {
+                tspStatus.Visible = false;
+
+                tslStatus.Text = "";
+
+                tslState.Text = "Idle";
+            }
+            else
+            {
+                tspStatus.Visible = true;
+
+                tspStatus.Maximum = max;
+                tspStatus.Value = current;
+
+                tslStatus.Text = $"{current} / {max}";
             }
         }
     }

@@ -14,7 +14,7 @@ namespace GustFontEditor
         public ushort Height;
         public int PaddingLeft;
         public int PaddingTop;
-        public int PaddingRigth;
+        public int PaddingRight;
         public int PaddingBottom;
 
         public Bitmap Texture;
@@ -29,7 +29,14 @@ namespace GustFontEditor
                     Array.Resize(ref Bytes, Bytes.Length - 1);
                 Bytes = Bytes.Reverse().ToArray();
 
-                return Encoding.UTF8.GetString(Bytes).Single();
+                try
+                {
+                    return Encoding.UTF8.GetString(Bytes).Single();
+                }
+                catch
+                {
+                    return Encoding.UTF8.GetString(Bytes)[0];
+                }
             }
             set
             {
@@ -46,7 +53,7 @@ namespace GustFontEditor
         public bool IsEmpty() {
             return UTF8 == 0 && X == 0 && Y == 0 && Width == 0 && Height == 0
                 && PaddingBottom == 0 && PaddingTop == 0
-                && PaddingLeft == 0 && PaddingRigth == 0;
+                && PaddingLeft == 0 && PaddingRight == 0;
         }
 
         public byte[] Build() {
@@ -58,7 +65,7 @@ namespace GustFontEditor
             BitConverter.GetBytes(Height).CopyTo(Data, 10);
             BitConverter.GetBytes(PaddingLeft).CopyTo(Data, 12);
             BitConverter.GetBytes(PaddingTop).CopyTo(Data, 16);
-            BitConverter.GetBytes(PaddingRigth).CopyTo(Data, 20);
+            BitConverter.GetBytes(PaddingRight).CopyTo(Data, 20);
             BitConverter.GetBytes(PaddingBottom).CopyTo(Data, 24);
             return Data;
         }
@@ -75,7 +82,7 @@ namespace GustFontEditor
             Height = *(ushort*)(StructPtr + 10);
             PaddingLeft = *(int*)(StructPtr + 12);
             PaddingTop = *(int*)(StructPtr + 16);
-            PaddingRigth = *(int*)(StructPtr + 20);
+            PaddingRight = *(int*)(StructPtr + 20);
             PaddingBottom = *(int*)(StructPtr + 24);
         }
 
@@ -92,7 +99,7 @@ namespace GustFontEditor
                 Height = *(ushort*)(StructPtr + 10);
                 PaddingLeft = *(int*)(StructPtr + 12);
                 PaddingTop = *(int*)(StructPtr + 16);
-                PaddingRigth = *(int*)(StructPtr + 20);
+                PaddingRight = *(int*)(StructPtr + 20);
                 PaddingBottom = *(int*)(StructPtr + 24);
             }
         }

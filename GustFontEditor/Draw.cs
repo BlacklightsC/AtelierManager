@@ -71,7 +71,7 @@ namespace GustFontEditor
                 int LeftDiff = -1;
 
                 if (CharLeft != Left) 
-                    LeftDiff = CharLeft- Left;                
+                    LeftDiff = CharLeft - Left;                
 
                 int NewTop = CharTop;
 
@@ -92,7 +92,7 @@ namespace GustFontEditor
                     NewGlyph.PaddingTop += (GlyphSize.Height / 2) - 2;
                     NewGlyph.PaddingLeft = 0;
                     NewGlyph.PaddingBottom = 0;
-                    NewGlyph.PaddingRigth = SpaceSize;
+                    NewGlyph.PaddingRight = SpaceSize;
                     NewGlyph.Width = (ushort)NewGlyph.Texture.Width;
                     NewGlyph.Height = (ushort)NewGlyph.Texture.Height;
                     return NewGlyph;
@@ -101,7 +101,7 @@ namespace GustFontEditor
                 NewGlyph.PaddingTop = NewTop;
                 NewGlyph.PaddingBottom = 0;
                 NewGlyph.PaddingLeft = LeftDiff;
-                NewGlyph.PaddingRigth = Trimmed.Width + 1;
+                NewGlyph.PaddingRight = Trimmed.Width + 1;
 
                 NewGlyph.Texture = Trimmed;
 
@@ -113,10 +113,13 @@ namespace GustFontEditor
 
         }
 
-        public static Point FindEmptyBlock(this Bitmap Texture, Size Size, Rectangle[] Areas) {
+        public static Point FindEmptyBlock(this Bitmap Texture, Size Size, Rectangle[] Areas, Size? TextureSize = null)
+        {
             Rectangle? Rect = null;
-            for (int X = 0; X < Texture.Width; X += Size.Width)
-                for (int Y = 0; Y < Texture.Height; Y += Size.Height)
+            int limWidth = (TextureSize?.Width ?? Texture.Width) - Size.Width;
+            int limHeight = (TextureSize?.Height ?? Texture.Height) - Size.Height;
+            for (int Y = 0; Y < limHeight; Y++)
+                for (int X = 0; X < limWidth; X++)
                 {
                     var Area = new Rectangle(X, Y, Size.Width, Size.Height);
                     if (Texture.IsEmpty(Area, Areas))
@@ -129,7 +132,7 @@ namespace GustFontEditor
             if (Rect == null)
                 throw new Exception("Failed to find free space in the font texture.");
 
-
+            /*
             var Rectangle = Rect.Value;
             do {
                 Rect = Rectangle;
@@ -142,24 +145,24 @@ namespace GustFontEditor
                 Rect = Rectangle;
                 Rectangle.Y--;
             } while (Texture.IsEmpty(Rectangle, Areas));
-
+            */
             return new Point(Rect.Value.X, Rect.Value.Y);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsEmpty(this Bitmap Texture, Rectangle Area, Rectangle[] Areas) {
-            if (Area != null && Areas.Where(x => x.IntersectsWith(Area)).Any())
+        public static bool IsEmpty(this Bitmap Texture, Rectangle pArea, Rectangle[] pAreas) {
+            if (pArea != null && pAreas.Where(x => x.IntersectsWith(pArea)).Any())
                 return false;
 
-            for (int x = 0; x < Area.Width; x++)
-                for (int y = 0; y < Area.Height; y++) {
-                    var PosX = x + Area.X;
-                    var PosY = y + Area.Y;
-                    if (PosX < 0 || PosY < 0 || PosX + Area.Width >= Texture.Width || PosY + Area.Height >= Texture.Height)
+            for (int x = 0; x < pArea.Width; x++)
+                for (int y = 0; y < pArea.Height; y++) {
+                    var PosX = x + pArea.X;
+                    var PosY = y + pArea.Y;
+                    if (PosX < 0 || PosY < 0 || PosX + pArea.Width >= Texture.Width || PosY + pArea.Height >= Texture.Height)
                         return false;
-                    var Color = Texture.GetPixel(PosX, PosY);
-                    if (Color.A != 0)
-                        return false;
+                    //var Color = Texture.GetPixel(PosX, PosY);
+                    //if (Color.A != 0)
+                        //return false;
                 }
             return true;
         }
@@ -213,7 +216,7 @@ namespace GustFontEditor
                         continue;
 
                     if (X > 1)
-                        X -= 2;
+                        X--;
 
                     Empty = false;
                     srcRect.X = X;
@@ -232,7 +235,7 @@ namespace GustFontEditor
                         continue;
 
                     if (X < source.Width - 1)
-                        X += 2;
+                        X++;
 
                     Empty = false;
                     srcRect.Width = X - srcRect.X;
@@ -269,8 +272,8 @@ namespace GustFontEditor
                     if (Pixel.A == 0)
                         continue;
 
-                    if (Y < source.Height)
-                        Y++;
+                    if (Y < source.Height - 1)
+                        Y += 2;
 
                     Empty = false;
                     srcRect.Height = Y - srcRect.Y;
